@@ -1,0 +1,129 @@
+
+msgid "-------------- COMMON -----------------"
+msgstr "-------------------------------------"
+
+msgid "no_item"
+msgstr "Items not found"
+
+msgid "actions"
+msgstr "Actions"
+
+msgid "add_new {0}"
+msgstr "Add new {0}"
+
+msgid "edit {0}"
+msgstr "Edit {0}"
+
+msgid "delete_all"
+msgstr "Delete All"
+
+msgid "submit"
+msgstr "Submit"
+
+msgid "preview"
+msgstr "Preview"
+
+msgid "id_not_found"
+msgstr "ID was not found"
+
+msgid "add_success"
+msgstr "The post has been saved."
+
+msgid "add_fail"
+msgstr "The post could not be saved. Please, try again."
+
+msgid "update_success"
+msgstr "The post has been updated success"
+
+msgid "update_fail"
+msgstr "The post could not be saved. Please, try again."
+
+msgid "confirm_delete {0}"
+msgstr "'Are you sure you want to delete # {0}?'"
+
+msgid "delete_success"
+msgstr "The post has been deleted"
+
+msgid "delete_fail"
+msgstr "Delete fail. Please try again.
+
+msgid "not_check_item"
+msgstr "No item choose, Please select at least an item"
+
+msgid "tags_note"
+msgstr "Tags separated by comma"
+
+msgid "error_max_length {0}"
+msgstr "{0} cannot be too long, maximum length of 255 characters"
+
+
+
+msgid "--------------- MODULES ----------------"
+msgstr "-------------------------------------"
+
+msgid "posts"
+msgstr "Posts"
+
+msgid "tags"
+msgstr "Tags"
+
+msgid "categories"
+msgstr "Categories"
+
+msgid "accounts"
+msgstr "Accounts"
+
+msgid "accounts_groups"
+msgstr "Accounts Groups"
+
+msgid "accounts_permissions"
+msgstr "Accounts Permissions"
+
+
+msgid "--------------- FIELDS -----------------"
+msgstr "-------------------------------------"
+
+msgid "name"
+msgstr "Name"
+
+msgid "group_name"
+msgstr "Group name"
+
+msgid "picture"
+msgstr "Picture"
+
+msgid "poster"
+msgstr "Poster"
+
+msgid "title"
+msgstr "Title"
+
+msgid "short"
+msgstr "Short"
+
+msgid "content"
+msgstr "Content"
+
+msgid "controller"
+msgstr "Controller"
+
+msgid "for_seo"
+msgstr "For SEO"
+
+msgid "permissions"
+msgstr "Permissions"
+
+msgid "alias"
+msgstr "Alias"
+
+msgid "meta_title"
+msgstr "Meta title"
+
+msgid "meta_keyword"
+msgstr "Meta keyword"
+
+msgid "meta_desc"
+msgstr "Meta description"
+
+msgid "featured_image"
+msgstr "Featured Image"

@@ -1,0 +1,2 @@
+msgid "no_item"
+msgstr "Items not found"
