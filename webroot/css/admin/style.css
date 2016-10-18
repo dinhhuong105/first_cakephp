@@ -79,24 +79,27 @@ input[type=file] {
     top: 27%;
     left: 27%;
     background: #000;
-    opacity: 0.8;
-    display: none;
+    opacity: 0;
     cursor: pointer;
     position: absolute;
+    transition: all 0.5s ease-in-out;
 }
 .feature-image .delete-icon i {
     font-size: 50px;
-    top: 30%;
+    top: 35%;
     left: 33%;
     z-index: 100;
     opacity: 1;
     color: #f00;
 }
+.feature-image img {
+    transition: all 0.5s ease-in-out;
+}
 .feature-image:hover img {
     opacity: 0.5;
 }
 .feature-image:hover .delete-icon {
-    display: block;
+    opacity: 0.8;
 }
 .pad-left-0 {
     padding-left: 0;
@@ -172,6 +175,9 @@ input[type=file] {
 /* end common - loading*/
 
 /* end common */
+
+
+
 
 /* navbar */
 .top-sidebar {
@@ -466,7 +472,3 @@ input[type=file] {
     -webkit-box-shadow:0 8px 20px 1px rgba(0,0,0,0.3);
     box-shadow:0 8px 20px 1px rgba(0,0,0,0.3);
 }
-
-/*  checkbox radiobox  */
-
-/* end checkbox radiobox */

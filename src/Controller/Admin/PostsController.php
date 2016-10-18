@@ -22,6 +22,7 @@ class PostsController extends AdminAppController
     {
         parent::initialize();
         $this->loadComponent('Files');
+        
     }
 
     /**
@@ -52,12 +53,16 @@ class PostsController extends AdminAppController
             } else {
                 $this->Flash->error(__('delete_fail'));
             }
-
+            
             return $this->redirect(['action' => 'index']);
         }
 
         $page  = (isset($this->request->params['page'])) ? $this->request->params['page'] : 1;
         $datas = $this->paginate($this->Posts, ['page' => $page]);
+        
+        $this->set('listTags', $this->loadModel('Tags')->getListTagsName());
+        $this->set('posterAccounts', $this->loadModel('Accounts')->find('list', ['keyField' => 'id', 'valueField' => 'full_name', 'conditions' => ['group_id' => 2]])->toArray());
+        $this->set('categories', $this->loadModel('Categories')->find('list', ['keyField' => 'id', 'valueField' => 'name'])->toArray());
         
         $this->set(compact('datas'));
         $this->set('_serialize', ['datas']);
@@ -77,7 +82,7 @@ class PostsController extends AdminAppController
     {
         $post = $this->Posts->newEntity();
         if ($this->request->is('post')) {
-            $data           = $this->request->data;
+            $data           = $this->request->data;           
             $alias          = ($data['alias']) ? $data['alias'] : $data['title'];
             $picture        = $this->Files->upload($data['picture'], 'uploads/pictures/', true, 800, 600);
 
@@ -90,13 +95,15 @@ class PostsController extends AdminAppController
             $post->short        = $data['short'];
             $post->content      = $data['content'];
             $post->category_id  = $data['category_id'];
-            $post->author_id    = ($this->Auth->user('id')) ? $this->Auth->user('id') : 0;
+            $post->author_id    = $data['author_id'];
             $post->alias        = Text::slug(strtolower($alias));
             $post->meta_title   = ($data['meta_title']) ? $data['meta_title'] : $data['title'];
             $post->meta_keyword = ($data['meta_keyword']) ? $data['meta_keyword'] : $data['title'];
             $post->meta_desc    = ($data['meta_desc']) ? $data['meta_desc'] : $data['title'];
             $post->created_at   = time();
             $post->updated_at   = time();
+            
+            
                 
             if ($this->Posts->save($post)) {
                 /* insert tags */
@@ -112,13 +119,10 @@ class PostsController extends AdminAppController
                 return $this->redirect(['action' => 'add']);
             }
         }
-        
-        #$categories = $this->loadModel('Categories')->find('list', ['fields' => ['id', 'name']]);
-        #$posterAccounts   = $this->loadModel('Accounts')->find('list', ['fields' => ['id', 'username']]);
 
         $this->set('listTags', $this->loadModel('Tags')->getListTagsName());
-        $this->set('posterAccounts', $this->loadModel('Accounts')->find('list', ['fields' => ['id', 'username']]));
-        $this->set('categories', $this->loadModel('Categories')->find('list', ['fields' => ['id', 'name']]));
+        $this->set('posterAccounts', $this->loadModel('Accounts')->find('list', ['keyField' => 'id', 'valueField' => 'full_name', 'conditions' => ['group_id' => 2]])->toArray());
+        $this->set('categories', $this->loadModel('Categories')->find('list', ['keyField' => 'id', 'valueField' => 'name'])->toArray());
         $this->set(compact('post'), $post);
         $this->set('_serialize', ['post']);
         $this->set('title', __('add_new {0}', __('posts')));
@@ -149,7 +153,7 @@ class PostsController extends AdminAppController
             
             // prepare data.
             $data   = $this->request->data;
-            $alias      = ($data['alias']) ? $data['alias'] : $data['title'];
+            $alias      = ($data['alias']) ? strtolower($data['alias']) : strtolower($data['title']);
             $picture    = $this->Files->upload($data['picture'], 'uploads/pictures/', true, 800, 600);
 
             if (isset($picture['name'])) {
@@ -164,8 +168,8 @@ class PostsController extends AdminAppController
             $post->short        = $data['short'];
             $post->content      = $data['content'];
             $post->category_id  = $data['category_id'];
-            $post->author_id    = ($this->Auth->user('id')) ? $this->Auth->user('id') : 0;
-            $post->alias        = Text::slug(strtolower($alias));
+            $post->author_id    = $data['author_id'];
+            $post->alias        = Text::slug($alias);
             $post->meta_title   = ($data['meta_title']) ? $data['meta_title'] : $data['title'];
             $post->meta_keyword = ($data['meta_keyword']) ? $data['meta_keyword'] : $data['title'];
             $post->meta_desc    = ($data['meta_desc']) ? $data['meta_desc'] : $data['title'];
@@ -191,9 +195,9 @@ class PostsController extends AdminAppController
             }
         }
         
-        $this->set('posterAccounts', $this->loadModel('Accounts')->find('list', ['fields' => ['id', 'full_name'], 'conditions' => ['group_id' => 2]]));
         $this->set('tags', $this->loadModel('Tags')->getListTagsName());
-        $this->set('categories', $this->loadModel('Categories')->find('list', ['fields' => ['id', 'name']]));
+        $this->set('posterAccounts', $this->loadModel('Accounts')->find('list', ['keyField' => 'id', 'valueField' => 'full_name', 'conditions' => ['group_id' => 2]])->toArray());
+        $this->set('categories', $this->loadModel('Categories')->find('list', ['keyField' => 'id', 'valueField' => 'name'])->toArray());
         $this->set(compact('post'), $post);
         $this->set('_serialize', ['post']);
         $this->set('title', __('edit {0}', __('posts')));

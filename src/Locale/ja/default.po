@@ -8,6 +8,9 @@ msgstr "Items not found"
 msgid "actions"
 msgstr "Actions"
 
+msgid "full_actions"
+msgstr "Full actions"
+
 msgid "add_new {0}"
 msgstr "Add new {0}"
 
@@ -56,6 +59,29 @@ msgstr "Tags separated by comma"
 msgid "error_max_length {0}"
 msgstr "{0} cannot be too long, maximum length of 255 characters"
 
+msgid "error_min_length {0}"
+msgstr "Mimimum {0} characters long"
+
+msgid "only_alpha_numeric"
+msgstr "Alphabets and numbers only"
+
+msgid "field_required"
+msgstr "Please fill this field"
+
+msgid "unique_value"
+msgstr "This value is already in use"
+
+msgid "invalid_email"
+msgstr "E-mail must be valid"
+
+msgid "invalid_number"
+msgstr "This field is only accepts numeric"
+
+msgid "invalid_login"
+msgstr "Invalid username or password, Please try again."
+
+msgid "permission_deny"
+msgstr "Permissions deny !."
 
 
 msgid "--------------- MODULES ----------------"
@@ -86,8 +112,17 @@ msgstr "-------------------------------------"
 msgid "name"
 msgstr "Name"
 
+msgid "username"
+msgstr "Username"
+
+msgid "password"
+msgstr "Password"
+
 msgid "group_name"
 msgstr "Group name"
+
+msgid "full_name"
+msgstr "Full name"
 
 msgid "picture"
 msgstr "Picture"
@@ -106,6 +141,33 @@ msgstr "Content"
 
 msgid "controller"
 msgstr "Controller"
+
+msgid "last_login"
+msgstr "Last login"
+
+msgid "login_info"
+msgstr "Login infomation"
+
+msgid "account_info"
+msgstr "Account infomation"
+
+msgid "first_name"
+msgstr "First name"
+
+msgid "last_name"
+msgstr "Last name"
+
+msgid "address"
+msgstr "Address"
+
+msgid "phone"
+msgstr "Phone"
+
+msgid "email"
+msgstr "Email"
+
+msgid "avatar"
+msgstr "Avatar"
 
 msgid "for_seo"
 msgstr "For SEO"
@@ -127,3 +189,12 @@ msgstr "Meta description"
 
 msgid "featured_image"
 msgstr "Featured Image"
+
+msgid "login"
+msgstr "Login"
+
+msgid "welcome_login"
+msgstr "Welcome to Admin Panel"
+
+msgid "welcome_to_admin_panel"
+msgstr "Welcome to Admin panel"

@@ -13,6 +13,36 @@
 	</div>
 	<div class="clearfix"></div>
 </div>
+
+<div class="form-search">
+    <div class="col-md-3 pad-left-5 pad-right-5">
+        <div class="input-group" style="width: 100%;">
+            <?= $this->Form->select('category_id', $categories, ['empty' => 'Select --', 'class' => 'col-sm-12 form-control', 'style' => 'width: 100%;', 'label' => 'aaa']) ?>
+        </div>
+    </div>
+    <div class="col-md-3 pad-left-5 pad-right-5">
+        <div class="input-group" style="width: 100%;">
+            <?= $this->Form->select('category_id', $categories, ['empty' => 'Select --', 'class' => 'col-sm-12 form-control', 'style' => 'width: 100%;']) ?>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="input-group">
+            <input type="text" class="form-control" aria-label="...">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <span class="caret"></span></button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="#">Title</a></li>
+                    <li><a href="#">Poster</a></li>
+                    <li><a href="#">Date post</a></li>
+                </ul>
+                <div class="pull-right"><?= $this->Form->button(__('submit'), ['class' => 'btn btn-primary']) ?></div>
+            </div><!-- /btn-group -->
+        </div><!-- /input-group -->
+    </div>
+    
+    <div class="clear"></div>
+</div>
+<br/>
 <div class="list-items">
 	<table class="table table-bordered table-hover table-striped">
 		<tr>

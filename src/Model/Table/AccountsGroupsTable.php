@@ -10,6 +10,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\Datasource\ConnectionManager;
 
 /**
  * Accounts Groups Model
@@ -66,5 +67,38 @@ class AccountsGroupsTable extends Table
     {
         $rules->add($rules->isUnique(['name']));
         return $rules;
+    }
+    
+    /**
+     * delete all groups by id
+     * 
+     * @param array $ids
+     * @return boolean
+     * 
+     * @since 1.0
+     * @version 1.0
+     * @author Dinh Van Huong
+     */
+    public function deleteAll($ids) 
+    {
+        $ok     = true;
+        $conn   = ConnectionManager::get('default');
+        $conn->begin();
+        
+        foreach ($ids as $id) {
+            $entity = $this->get($id);
+            if (!$this->delete($entity)) {
+                $ok = false;
+                break;
+            }
+        }
+        
+        if ($ok) {
+            $conn->commit();
+            return true;
+        } else {
+            $conn->rollback();
+            return false;
+        }
     }
 }

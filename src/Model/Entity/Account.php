@@ -12,6 +12,7 @@ namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
 use Cake\Auth\DefaultPasswordHasher;
+use Cake\I18n\Time;
 
 /**
  * Accounts Entity
@@ -51,7 +52,9 @@ class Account extends Entity
      */
     protected function _setPassword($password)
     {
-        return (new DefaultPasswordHasher)->hash($password);
+        if ($password) {
+            return (new DefaultPasswordHasher)->hash($password);
+        }
     }
     
     /**
@@ -66,6 +69,20 @@ class Account extends Entity
     protected function _getFullName()
     {
         return $this->_properties['first_name'] . ' ' . $this->_properties['last_name'];
+    }
+        
+    /**
+     * get last time login
+     * 
+     * @return string dateTime
+     * 
+     * @since 1.0
+     * @version 1.0
+     * @author Dinh Van Huong
+     */
+    protected function _getLastLoginDate()
+    {
+        return ($this->_properties['last_login']) ? date('Y/m/d H:i', $this->_properties['last_login']) : '';
     }
 
 }

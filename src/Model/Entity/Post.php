@@ -11,7 +11,6 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
-use Cake\Utility\Text;
 
 /**
  * Post Entity
@@ -33,25 +32,8 @@ class Post extends Entity
      * @var array
      */
     protected $_accessible = [
-        '*'     => false,
-        'id'    => false,
-        'tags'  =>  true
+        '*'     => true,
+        'id'    => false
     ];
-    
-    /**
-     * set title
-     * 
-     * @param string $title
-     * @return string
-     * 
-     * @since 1.0
-     * @version 1.0
-     * @author Dinh Van Huong
-     */
-    protected function _setTitle($title)
-    {
-        $this->set('alias', Text::slug($title));
-        return $title;
-    }
 
 }

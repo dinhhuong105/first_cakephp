@@ -1,6 +1,6 @@
-<!-- tiny mce editor -->
-<?= $this->Html->script('admin/tinymce/tinymce.min', ['block' => 'extScript']); ?>
-<?= $this->Html->script('admin/tinymce/tinymce.load', ['block' => 'extScript']); ?>
+<!-- ckeditor + kcfinder editor -->
+<?= $this->Html->script('admin/ckeditor/ckeditor', ['block' => 'extScript']);?>
+
 
 <!-- bootstrap tags inputs -->
 <?= $this->Html->css('admin/bootstrap-tagsinput', ['block' => 'extCss']); ?>
@@ -34,7 +34,7 @@
                 </div>
                 <div class="form-group">
                     <label for="description"><?= __('content') ?></label>
-                    <?= $this->Form->textarea('content', ['id' => 'description', 'class' => 'tinymce']) ?>
+                    <?= $this->Form->textarea('content', ['id' => 'description', 'class' => 'ckeditor tinymce']) ?>
                     <div class="clear"></div>
                 </div>
             </div>
@@ -56,16 +56,16 @@
                 <label><?= __('categories') ?></label>
             </div>
             <div class="panel-body">
-                <?=
-                #$this->Form->select('category_id', $categories, ['class' => 'col-sm-12 form-control', 'label' => false])
-                $this->Form->input('category_id', [
-                    'option' => $categories,
-                    'empty'  => 'Select --',
-                    'class'  => 'col-sm-12 form-control',
-                    'label'  => false,
-                    'type'   => 'select'
-                ])
-                ?>
+                <?= $this->Form->select('category_id', $categories, ['empty' => 'Select --', 'class' => 'col-sm-12 form-control', 'label' => false]) ?>
+            </div>
+        </div>
+        
+        <div class="panel panel-default">
+            <div class="panel-heading required">
+                <label><?= __('poster') ?></label>
+            </div>
+            <div class="panel-body">
+                <?= $this->Form->select('author_id', $posterAccounts, ['empty' => 'Select --', 'class' => 'col-sm-12 form-control', 'label' => false])?>
             </div>
         </div>
 

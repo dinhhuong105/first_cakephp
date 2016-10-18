@@ -16,7 +16,7 @@
             <div class="panel-heading"><?= __('group_name')?></div>
 			<div class="panel-body">
 				<div class="form-group">
-					<?= $this->Form->input('controller', ['class' => 'col-sm-12 form-control', 'placeholder' => __('name'), 'label' => false]);?>
+					<?= $this->Form->input('name', ['class' => 'col-sm-12 form-control', 'placeholder' => __('name'), 'label' => false]);?>
 					<div class="clear"></div>
 				</div>
 			</div>
@@ -27,7 +27,17 @@
         <?php foreach ($permissions as $perms) : ?>
         <?php if ($perms->actions) : ?>
             <div class="panel panel-default">
-                <div class="panel-heading"><?= $perms->controller?></div>
+                <div class="panel-heading">
+                    <div class="pull-left"><?= $perms->controller?></div>
+                    <div class="pull-right checkbox">
+                        <label>
+                            <?= $this->Form->input('perms[' . $perms->id . '][full_actions]', ['type' => 'hidden', 'class' => 'full-action', 'value' => 0])?>
+                            <?= $this->Form->checkbox('checkall', ['class' => 'checkall-perms', 'hiddenField' => false])?>
+                            <?= __('full_actions')?>
+                        </label>
+                    </div>
+                    <div class="clear"></div>
+                </div>
                 <div class="panel-body">
                     <div class="form-group">
                         <?php
@@ -36,7 +46,7 @@
                         ?>                        
                         <div class="checkbox col-md-2" style="margin-top: 10px;">
                             <label>
-                                <?= $this->Form->checkbox('perms[' . $perms->id . '][]', ['value' => $act, 'class' => 'checkbox', 'hiddenField' => false])?>
+                                <?= $this->Form->checkbox('perms[' . $perms->id . '][actions][]', ['value' => $act, 'class' => 'checkbox', 'hiddenField' => false])?>
                                 <?= $act?>
                             </label>
                         </div>

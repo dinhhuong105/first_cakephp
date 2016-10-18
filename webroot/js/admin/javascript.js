@@ -17,13 +17,29 @@ $(document).ready(function(){
         height > topOffset && $("#page-wrapper").css("min-height", height + "px");
     });
     
+    $('#toggle-login').click(function() {
+        $('#login').toggle();
+    });
+    
     /* check all checkbox */
     $('#checkall').click(function () {
-        var thisCheck = $(this);
-        if (thisCheck.is(':checked')) {
+        var $this = $(this);
+        if ($this.is(':checked')) {
             $('.table input.checkbox').prop('checked', true);
         } else {
             $('.table input.checkbox').removeAttr('checked');
+        }
+    });
+    
+    /* check all permission */
+    $('.checkall-perms').click(function(){
+        var $this = $(this);
+        if ($this.is(':checked')) {
+            $this.closest('.panel').find('input.checkbox').prop('checked', true).attr('disabled', true);
+            $this.closest('.panel').find('input.full-action').val(1);
+        } else {
+            $this.closest('.panel').find('input.checkbox').removeAttr('checked').removeAttr('disabled');
+            $this.closest('.panel').find('input.full-action').val(0);
         }
     });
     

@@ -61,17 +61,9 @@ class PostsTable extends Table
      */
     public function validationDefault(Validator $validator)
     {
-        $validator
-            ->add('title', 'notEmpty', [
-                'rule' => 'notEmpty',
-                'message' => __('not_empty')
-            ]);
-        
-        $validator
-            ->add('category_id', 'notEmpty', [
-                'rule'      =>  'notEmpty',
-                'message'   =>  __('not_empty')
-            ]);
+        $validator->notEmpty('title', __('field_required'));
+        $validator->notEmpty('category_id', __('field_required'));
+        $validator->notEmpty('author_id', __('field_required'));
 
         return $validator;
     }

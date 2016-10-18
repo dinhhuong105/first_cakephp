@@ -38,8 +38,9 @@
 			'sub'			=>	[
 				'accounts-permissions'	=>	'Accounts Permissions',
 				'accounts-groups'		=>	'Accounts Groups',
-				'add'					=>	'Add new Account',
-				'index'					=>	'Accounts Manager'
+				//'add'					=>	'Add new Account',
+				'index'					=>	'Accounts Manager',
+                'logout'				=>	'Logout'
 			]
 		]
 	];

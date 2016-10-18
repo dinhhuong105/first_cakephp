@@ -27,7 +27,7 @@
 		<?php foreach ($datas as $data) :?>		
 		<tr>
 			<td style="text-align: center; vertical-align: middle;"><?= $this->Form->checkbox('ids[]', ['value' => $data->id, 'class' => 'checkbox', 'hiddenField' => false])?></td>
-            <td style="vertical-align: middle;"><?= $this->Html->link(h($data->name), ['controller' => 'AccountsGroups', 'action' => 'edit'])?></td>
+            <td style="vertical-align: middle;"><?= $this->Html->link(h($data->name), ['controller' => 'AccountsGroups', 'action' => 'edit', $data->id])?></td>
 			<td style="text-align: center; vertical-align: middle;">
 				<?= $this->Html->link(
 					$this->Html->tag('i', '', ['class' => 'glyphicon glyphicon-pencil']),

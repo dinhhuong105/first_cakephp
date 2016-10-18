@@ -16,6 +16,20 @@ namespace App\Controller\Admin;
 class AccountsController extends AdminAppController
 {
 
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('Files');
+    }
+    
+    public function authorize($user)
+    {
+        echo "<pre>";
+        print_r($user);
+        echo "</pre>";
+        exit;
+    }
+
     /**
      * display list account in view
      *
@@ -29,15 +43,30 @@ class AccountsController extends AdminAppController
     {
         // re-config pagination.
         $this->paginate = [
-            'limit' => TOTAL_RECORD_DISPLAYED
+            'contain'   =>  ['AccountsGroups']
         ];
-
+        
+        if ($this->request->is('post')) {
+            if (empty($this->request->data['ids'])) {
+                $this->Flash->error(__('not_check_item'));
+                return $this->redirect(['action' => 'index']);
+            }
+            
+            if (isset($this->request->data['delete-all']) && $this->Accounts->deleteAll($this->request->data['ids'])) {
+                $this->Flash->success(__('delete_success'));
+            } else {
+                $this->Flash->error(__('delete_fail'));
+            }
+                
+            return $this->redirect(['action' => 'index']);
+        }
+        
         $page  = (isset($this->request->params['page'])) ? $this->request->params['page'] : 1;
-        $datas = $this->paginate($this->AccountsGroups, ['page' => $page]);
+        $datas = $this->paginate($this->Accounts, ['page' => $page]);
 
         $this->set(compact('datas'));
         $this->set('_serialize', ['datas']);
-        $this->set('title', __('Accounts Groups'));
+        $this->set('title', __('accounts'));
     }
 
     /**
@@ -51,25 +80,35 @@ class AccountsController extends AdminAppController
      */
     public function add()
     {
-        $accountGroup = $this->AccountsGroups->newEntity();
+        $accounts = $this->Accounts->newEntity();
         if ($this->request->is('post')) {
-            $data = $this->request->data;
-
-            $accountGroup->name       = $data['name'];
-            $accountGroup->created_at = time();
-            $accountGroup->updated_at = time();
-
-            if ($this->AccountsGroups->save($accountGroup)) {
-                $this->Flash->success(__('The account group has been saved.'));
+            
+            $this->request->data['active']      = 1;
+            $this->request->data['created_at']  = time();
+            $this->request->data['updated_at']  = time();
+            
+            if ($this->request->data['avatar']) {
+                $avatar = $this->Files->upload($this->request->data['avatar'], 'uploads/pictures/', true, 350, 350);
+            }
+            
+            if (isset($avatar['name'])) {
+                $this->request->data['avatar'] = $avatar['name'];
+            }
+            
+            $accounts = $this->Accounts->patchEntity($accounts, $this->request->data());
+            if ($this->Accounts->save($accounts)) {
+                $this->Flash->success(__('add_success'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The account group could not be saved. Please, try again.'));
+                $this->Flash->error(__('add_fail'));
             }
         }
-
-        $this->set(compact('accountGroup'), $accountGroup);
-        $this->set('_serialize', ['accountGroup']);
-        $this->set('title', __('Add new'));
+        
+        $groups = $this->loadModel('AccountsGroups')->find('list', ['keyField' => 'id', 'valueField' => 'name'])->toArray();
+        $this->set(compact('accounts'), $accounts);
+        $this->set('_serialize', ['accounts']);
+        $this->set('groups', $groups);
+        $this->set('title', __('add_new {0}', __('accounts')));
     }
 
     /**
@@ -84,7 +123,47 @@ class AccountsController extends AdminAppController
      */
     public function edit($id)
     {
-
+        if (empty($id)) {
+            $this->Flash->error(__('id_not_found'));
+            return $this->redirect(['action' => 'index']);
+        }
+        
+        $accounts = $this->Accounts->get($id, ['contain' => ['AccountsGroups']]);
+        
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            
+            $this->request->data['updated_at']  = time();
+            if (empty($this->request->data['password'])) {
+                unset($this->request->data['password']);
+            }
+            
+            if ($this->request->data['avatar']) {
+                $avatar = $this->Files->upload($this->request->data['avatar'], 'uploads/pictures/', true, 350, 350);
+            }
+            
+            if (isset($avatar['name'])) {
+                $this->request->data['avatar'] = $avatar['name'];
+            } else {
+                if ($this->request->data['remove_feature_image']) {
+                    $this->request->data['avatar'] = '';
+                } else {
+                    unset($this->request->data['avatar']);
+                }
+            }
+            
+            $accounts = $this->Accounts->patchEntity($accounts, $this->request->data());
+            if ($this->Accounts->save($accounts)) {
+                $this->Flash->success(__('add_success'));
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__('add_fail'));
+            }
+        }
+        
+        $this->set(compact('accounts'), $accounts);
+        $this->set('_serialize', 'accounts');
+        $this->set('groups', $this->loadModel('AccountsGroups')->find('list', ['keyField' => 'id', 'valueField' => 'name'])->toArray());
+        $this->set('title', __('edit {0}', __('accounts')));
     }
 
     /**
@@ -99,7 +178,20 @@ class AccountsController extends AdminAppController
      */
     public function delete($id)
     {
+        if (empty($id)) {
+            $this->Flash->error(__('id_not_found'));
+            return $this->redirect(['action' => 'index']);
+        }
+        
+        $accounts = $this->Accounts->get($id);
 
+        if ($this->Accounts->delete($accounts)) {
+            $this->Flash->success(__('delete_success'));
+        } else {
+            $this->Flash->error(__('delete_fail'));
+        }
+        
+        return $this->redirect(['action' => 'index']);
     }
 
     /**
@@ -141,19 +233,21 @@ class AccountsController extends AdminAppController
      */
     public function login()
     {
-        $user = ['id' => 1, 'username' => 'admin'];
-        $this->Auth->setUser($user);
-        return $this->redirect(['controller' => 'Posts', 'action' => 'index']);
-        /*
+        
         if ($this->request->is('post')) {
             $user = $this->Auth->identify();
             if ($user) {
                 $this->Auth->setUser($user);
-                return $this->redirect($this->Auth->redirectUrl());
+                $this->Flash->success(__('welcome_to_admin_panel'));
+                
+                /* update last login for account */
+                $account = $this->Accounts->get($user['id']);
+                $account->last_login = time();
+                $this->Accounts->save($account);
+                return $this->redirect(['controller' => 'Posts', 'action' => 'index']);
             }
-            $this->Flash->error(__('Invalid username or password, try again'));
+            $this->Flash->error(__('invalid_login'));
         }
-        */
     }
 
     /**

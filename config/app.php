@@ -84,8 +84,16 @@ return [
      */
     'Cache' => [
         'default' => [
-            'className' => 'File',
+            'className' => 'Null',
             'path' => CACHE,
+            'url' => env('CACHE_DEFAULT_URL', null),
+        ],
+        
+        'permissions' => [
+            'className' => 'File',
+            'prefix' => 'cache_',
+            'path' => CACHE . 'permissions/',
+            'duration' => '1 day',
             'url' => env('CACHE_DEFAULT_URL', null),
         ],
 
@@ -97,11 +105,11 @@ return [
          */
         '_cake_core_' => [
             //'className' => 'File',
-			'className' => 'Null',
+			'className' => 'File',
             'prefix' => 'myapp_cake_core_',
             'path' => CACHE . 'persistent/',
             'serialize' => true,
-            'duration' => '0 minutes',
+            'duration' => '2 minutes',
             'url' => env('CACHE_CAKECORE_URL', null),
         ],
 
@@ -116,7 +124,7 @@ return [
             'prefix' => 'myapp_cake_model_',
             'path' => CACHE . 'models/',
             'serialize' => true,
-            'duration' => '0 minutes',
+            'duration' => '2 minutes',
             'url' => env('CACHE_CAKEMODEL_URL', null),
         ],
     ],

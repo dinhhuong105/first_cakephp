@@ -7,7 +7,26 @@ CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here. For example:
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';
-
+    
+    config.height   = '500px';
+    
+    config.extraPlugins = 'youtube';
+    
+    config.toolbarGroups = [
+        { name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
+        { name: 'links' },
+        { name: 'insert' },
+        { name: 'colors' },
+        { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+        
+        { name: 'others' },        
+        { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
+        { name: 'styles' },
+        
+        { name: 'document',    groups: [ 'mode', 'document'] },
+        { name: 'tools' }
+    ];
+        
 	config.filebrowserBrowseUrl         = baseUrl + 'webroot/js/admin/kcfinder/browse.php?opener=ckeditor&type=files';
 	config.filebrowserImageBrowseUrl    = baseUrl + 'webroot/js/admin/kcfinder/browse.php?opener=ckeditor&type=images';
 	config.filebrowserFlashBrowseUrl    = baseUrl + 'webroot/js/admin/kcfinder/browse.php?opener=ckeditor&type=flash';
